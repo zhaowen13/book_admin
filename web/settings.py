@@ -52,7 +52,8 @@ REST_FRAMEWORK = {
     ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.SessionAuthentication',
-        'rest_framework.authentication.TokenAuthentication',
+        # 'rest_framework.authentication.TokenAuthentication',
+        'my_web.authentication.ExpiringTokenAuthentication'
     )
 }
 
@@ -97,7 +98,7 @@ yamlPath='./web/db.yaml'
 yaml.load(yamlPath, Loader=yaml.BaseLoader)
 yaml.warnings({'YAMLLoadWarning': False})
 f = open(yamlPath, 'r')
-temp = yaml.load(f.read())
+temp = yaml.load(f.read(),Loader=yaml.FullLoader)
 NAME=temp['name']
 USER=temp['user']
 PASSWORD=temp['password']
@@ -144,7 +145,8 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+# TIME_ZONE = 'UTC'
+TIME_ZONE = "Asia/Shanghai"
 
 USE_I18N = True
 

@@ -1,9 +1,7 @@
 # from django.conf.urls import url, include
 from django.urls import path, include,re_path
 from rest_framework import routers
-from my_web.views import BookViewSet,BranchViewSet,BorrowhViewSet
-from rest_framework.authtoken import views
-from my_web.login_views import login
+from my_web.views import BookViewSet,BranchViewSet,BorrowhViewSet,obtain_expiring_auth_token
 from django.views.generic import TemplateView
 from django.conf import settings
 from django.views.static import serve
@@ -16,8 +14,7 @@ router.register('borrowh', BorrowhViewSet)
 
 urlpatterns = [
     path('api/', include(router.urls)),
-    path('api/login', login),
-    path('api-token-auth/', views.obtain_auth_token),
+    path('api-token-auth/', obtain_expiring_auth_token, name='api-token'),
     path('admin/', admin.site.urls),
     re_path(r'^', TemplateView.as_view(template_name="index.html")),
     re_path(r'^static/(?P<path>.*)$',serve,{'document_root': settings.STATIC_ROOT}),
